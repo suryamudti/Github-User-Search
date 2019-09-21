@@ -1,5 +1,7 @@
 package com.surya.githubusersearchapp.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,16 @@ class UserViewHolder(view: ListItemBinding) : RecyclerView.ViewHolder(view.root)
 
     private var user: GitUser? = null
 
+    init {
+        // register click listener on the view and open the url link to view repo in browser
+        view.root.setOnClickListener {
+            user?.htmlUrl?.let { url ->
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                view.root.context.startActivity(intent)
+            }
+        }
+    }
+
     /**
      * handles displaying the user data per item, or dummy text until it's loaded
      */
@@ -43,7 +55,7 @@ class UserViewHolder(view: ListItemBinding) : RecyclerView.ViewHolder(view.root)
         name.text = user.login
         Glide.with(itemView.context).load(user.avatarUrl).into(image)
         if (user.type.equals("User")) type.setBackgroundResource(R.drawable.ic_person_blue_24dp)
-        else type.setBackgroundResource(R.drawable.ic_location_city_blue_24dp)
+        else if (user.type.equals("Organization")) type.setBackgroundResource(R.drawable.ic_location_city_blue_24dp)
     }
 
     companion object {
