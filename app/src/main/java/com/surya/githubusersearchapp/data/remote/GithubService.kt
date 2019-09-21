@@ -23,7 +23,7 @@ interface GithubService {
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") itemsPerPage: Int
-    ): Call<GitUserResponse> // returns a RepoSearchResponse class
+    ): Call<GitUserResponse> // returns a UserSearchResponse class
 
     /**
      * create base url and build retrofit client call
