@@ -8,7 +8,7 @@ data class GitUserResponse(
     @SerializedName("incomplete_results")
     var incompleteResults: Boolean?,
     @SerializedName("items")
-    var items: List<GitUser?>,
+    var items: List<GitUser>,
     @SerializedName("total_count")
     var totalCount: Int
 )

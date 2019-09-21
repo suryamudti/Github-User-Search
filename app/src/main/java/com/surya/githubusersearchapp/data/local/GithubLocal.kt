@@ -28,7 +28,7 @@ class GithubLocal(
      * Request a LiveData<List<User>> from the Dao, based on a User name. If the name contains
      * multiple words separated by spaces, then we're emulating the GitHub API behavior and allow
      * any characters between the words.
-     * @param name repository name
+     * @param name user name
      */
     fun usersByName(name: String): DataSource.Factory<Int, GitUser> {
         // appending '%' so we can allow other characters to be before and after the query string
