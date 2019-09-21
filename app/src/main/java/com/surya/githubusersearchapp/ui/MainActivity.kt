@@ -1,7 +1,8 @@
-package com.surya.githubusersearchapp
+package com.surya.githubusersearchapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.surya.githubusersearchapp.R
 
 class MainActivity : AppCompatActivity() {
 
