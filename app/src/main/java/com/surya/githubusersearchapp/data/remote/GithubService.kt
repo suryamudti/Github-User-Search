@@ -19,7 +19,7 @@ interface GithubService {
      * Get github users
      */
     @GET("search/users")
-    fun searchRepos(
+    fun searchUsers(
         @Query("q") query: String,
         @Query("page") page: Int,
         @Query("per_page") itemsPerPage: Int
