@@ -17,8 +17,7 @@ interface UserDao {
     fun insert(posts: List<GitUser>)
 
     // Do a similar query as the search API:
-    // Look for users that contain the query string in the name or in the description
-    // and order those results descending, by the number of stars and then by name
+    // Look for users that contain the query string in the name login
     @Query("SELECT * FROM users WHERE (login LIKE :queryString)")
     fun usersByName(queryString: String): DataSource.Factory<Int, GitUser>
 }
