@@ -3,9 +3,11 @@ package com.surya.githubusersearchapp.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.surya.githubusersearchapp.R
 import com.surya.githubusersearchapp.data.model.GitUser
 import com.surya.githubusersearchapp.databinding.ListItemBinding
@@ -16,6 +18,8 @@ import com.surya.githubusersearchapp.databinding.ListItemBinding
 class UserViewHolder(view: ListItemBinding) : RecyclerView.ViewHolder(view.root) {
 
     private val name: TextView = view.titleText
+    private val image: ImageView = view.image
+    private val type : ImageView = view.type
 
     private var user: GitUser? = null
 
@@ -25,7 +29,6 @@ class UserViewHolder(view: ListItemBinding) : RecyclerView.ViewHolder(view.root)
     fun bind(user: GitUser?){
         if (user == null){
             name.text = "Loading"
-
         }else{
             showUserData(user)
         }
@@ -36,9 +39,11 @@ class UserViewHolder(view: ListItemBinding) : RecyclerView.ViewHolder(view.root)
      */
     private fun showUserData(user: GitUser) {
         this.user = user
+
         name.text = user.login
-
-
+        Glide.with(itemView.context).load(user.avatarUrl).into(image)
+        if (user.type.equals("User")) type.setBackgroundResource(R.drawable.ic_person_blue_24dp)
+        else type.setBackgroundResource(R.drawable.ic_location_city_blue_24dp)
     }
 
     companion object {

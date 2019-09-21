@@ -19,13 +19,19 @@ class MainViewModel(
     private val queryLiveData = MutableLiveData<String>()
 
     private val userResult: LiveData<UserSearchResult> = Transformations.map(queryLiveData) {
-        repository.search(it) // returns UserSearchResult live data by executing search method from GithubRepository with every update to the queryLiveData
+        // returns UserSearchResult live data by executing search method from GithubRepository with every update to the queryLiveData
+        repository.search(it)
     }
 
 
-    val users: LiveData<PagedList<GitUser>> = Transformations.switchMap(userResult) { it.data } // returns the list of users live data from UserSearchResult
+    val users: LiveData<PagedList<GitUser>> = Transformations.switchMap(userResult) {
+        // returns the list of users live data from UserSearchResult
+        it.data
+    }
+
     val networkErrors: LiveData<String> = Transformations.switchMap(userResult) {
-        it.networkErrors // // returns error string live data from UserSearchResult
+        // returns error string live data from UserSearchResult
+        it.networkErrors
     }
 
     /**
@@ -36,8 +42,6 @@ class MainViewModel(
     fun searchUser(queryString: String) {
         queryLiveData.postValue(queryString)
     }
-
-
 
     /**
      * Get the last query value.

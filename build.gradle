@@ -34,11 +34,14 @@ ext {
     supportLibVersion = '1.0.0'
     constraintLayoutVersion = '1.1.3'
     archComponentsVersion = '2.1.0'
+    appCompatVersion = '1.1.0'
     roomVersion = '2.2.0-rc01'
     pagingVersion = '2.1.0'
     retrofitVersion = "2.3.0"
     okhttpLoggingInterceptorVersion = "3.9.0"
     kodeinVersion = '6.2.1'
+    picassoVersion = '2.71828'
+    glideVersion = '4.9.0'
 
     runnerVersion = '1.1.0-alpha4'
     rulesVersion = "1.0.1"

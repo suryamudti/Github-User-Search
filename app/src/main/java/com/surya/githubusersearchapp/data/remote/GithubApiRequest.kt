@@ -12,7 +12,7 @@ import retrofit2.Response
  */
 
 private const val TAG = "GithubService"
-private const val IN_QUALIFIER = "in:name,description"
+private const val IN_QUALIFIER = "in:login"
 
 class GithubApiRequest {
 
