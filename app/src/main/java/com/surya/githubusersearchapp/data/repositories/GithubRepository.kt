@@ -36,7 +36,7 @@ class GithubRepository(
     }
 
     companion object {
-        private const val DATABASE_PAGE_SIZE = 20 // page data from the DataSource in chunks of 20 items.
+        private const val DATABASE_PAGE_SIZE = 10 // page data from the DataSource in chunks of 10 items.
     }
 
 }
