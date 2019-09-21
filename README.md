@@ -1,3 +1,3 @@
 # Screenshot
 
-![Screenshot](screenshoogt.png)
+![Screenshot](screenshoot.png)
