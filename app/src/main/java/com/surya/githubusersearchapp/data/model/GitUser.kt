@@ -1,9 +1,15 @@
 package com.surya.githubusersearchapp.data.model
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "users")
 data class GitUser(
+    @PrimaryKey
+    @SerializedName("id")
+    var id: Int?,
     @SerializedName("avatar_url")
     var avatarUrl: String?,
     @SerializedName("events_url")
@@ -18,8 +24,6 @@ data class GitUser(
     var gravatarId: String?,
     @SerializedName("html_url")
     var htmlUrl: String?,
-    @SerializedName("id")
-    var id: Int?,
     @SerializedName("login")
     var login: String?,
     @SerializedName("node_id")
