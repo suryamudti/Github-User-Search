@@ -42,6 +42,7 @@ ext {
     kodeinVersion = '6.2.1'
     picassoVersion = '2.71828'
     glideVersion = '4.9.0'
+    coroutinesVersion = '1.3.0'
 
     runnerVersion = '1.1.0-alpha4'
     rulesVersion = "1.0.1"

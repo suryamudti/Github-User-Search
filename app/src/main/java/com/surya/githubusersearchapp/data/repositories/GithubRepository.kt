@@ -14,7 +14,6 @@ class GithubRepository(
     private val local : GithubLocal
 
 ) {
-
     /**
      * Search users whose names match the query.
      */
@@ -25,6 +24,7 @@ class GithubRepository(
         // Construct the boundary callback
         val boundaryCallback = UserBoundaryCallback(query, remote, local)
         val networkErrors = boundaryCallback.networkErrors
+        val isEmpty = boundaryCallback.isEmpty
 
         // Get the paged list
         val data = LivePagedListBuilder(dataSourceFactory, DATABASE_PAGE_SIZE)
@@ -32,7 +32,7 @@ class GithubRepository(
             .build()
 
         // Get the network errors exposed by the boundary callback
-        return UserSearchResult(data , networkErrors)
+        return UserSearchResult(data,networkErrors,isEmpty)
     }
 
     companion object {

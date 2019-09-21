@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
+import com.surya.githubusersearchapp.data.callback.MainViewModelCallback
 import com.surya.githubusersearchapp.data.model.GitUser
 import com.surya.githubusersearchapp.data.model.UserSearchResult
 import com.surya.githubusersearchapp.data.repositories.GithubRepository
@@ -16,6 +17,7 @@ class MainViewModel(
     private val repository: GithubRepository
 ) : ViewModel() {
 
+
     private val queryLiveData = MutableLiveData<String>()
 
     private val userResult: LiveData<UserSearchResult> = Transformations.map(queryLiveData) {
@@ -23,10 +25,14 @@ class MainViewModel(
         repository.search(it)
     }
 
-
     val users: LiveData<PagedList<GitUser>> = Transformations.switchMap(userResult) {
         // returns the list of users live data from UserSearchResult
         it.data
+    }
+
+    val isEmpty : LiveData<Boolean> = Transformations.switchMap(userResult){
+        // returns false true if data is empty
+        it.isEmpty
     }
 
     val networkErrors: LiveData<String> = Transformations.switchMap(userResult) {

@@ -8,5 +8,6 @@ import androidx.paging.PagedList
  */
 data class UserSearchResult(
     val data: LiveData<PagedList<GitUser>>,
-    val networkErrors: LiveData<String>
+    val networkErrors: LiveData<String>,
+    val isEmpty : LiveData<Boolean>
 )

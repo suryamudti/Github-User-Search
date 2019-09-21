@@ -68,6 +68,9 @@ dependencies {
     implementation "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodeinVersion"
 
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
     // testing
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test:runner:$runnerVersion"

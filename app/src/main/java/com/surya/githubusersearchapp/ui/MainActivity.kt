@@ -12,12 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import com.surya.githubusersearchapp.R
+import com.surya.githubusersearchapp.data.callback.MainViewModelCallback
 import com.surya.githubusersearchapp.data.model.GitUser
 import com.surya.githubusersearchapp.di.GithubUserSearchAppInjection
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    
+
     private lateinit var viewModel: MainViewModel
     private val adapter = UserAdapter()
 
@@ -31,8 +32,10 @@ class MainActivity : AppCompatActivity() {
             .get(MainViewModel::class.java)
 
         initAdapter()// initiate adapter and load default user list from network
+
         // check if the search query string
         val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
+
         // initiate / update search query string livedata in vm
         viewModel.searchUser(query)
         initSearch(query)
@@ -49,17 +52,27 @@ class MainActivity : AppCompatActivity() {
      * observe the vm users live data for returned list of user from network call
      *
      * observes network error messages
+     *
+     * observe empty list
      */
     private fun initAdapter() {
         list.adapter = adapter
+
         // observer list of user live data returned form network call
         viewModel.users.observe(this, Observer<PagedList<GitUser>> {
             Log.d("Activity", "list: ${it?.size}")
-            showEmptyList(it?.size == 0) // hide list if size is 0, show tv with msg
             adapter.submitList(it) // Submits a new list to be diffed, and displayed.
+            if (it.size>0) progressBar.visibility = View.GONE
         })
+
+        // observe the network error
         viewModel.networkErrors.observe(this, Observer<String> {
             Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
+        })
+
+        // observe if the list is empty
+        viewModel.isEmpty.observe(this, Observer<Boolean> {
+            showEmptyList(it)
         })
     }
 
@@ -97,15 +110,22 @@ class MainActivity : AppCompatActivity() {
         if (show) {
             emptyList.visibility = View.VISIBLE
             list.visibility = View.GONE
+            progressBar.visibility = View.GONE
         } else {
             emptyList.visibility = View.GONE
             list.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }
     }
 
     private fun updateUserListFromInput() {
         search_user.text.trim().let {
             if (it.isNotEmpty()) {
+
+                // manual init the progressbar
+                progressBar.visibility = View.VISIBLE
+                emptyList.visibility = View.GONE
+
                 list.scrollToPosition(0)// reset rv scroll
                 viewModel.searchUser(it.toString()) // initiate a search for query
                 adapter.submitList(null) // empty/reset the adapter

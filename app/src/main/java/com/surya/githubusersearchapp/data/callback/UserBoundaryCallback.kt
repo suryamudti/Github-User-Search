@@ -1,5 +1,6 @@
 package com.surya.githubusersearchapp.data.callback
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -26,9 +27,16 @@ class UserBoundaryCallback (private val query: String,
     // LiveData of network errors.
     private val _networkErrors = MutableLiveData<String>()
 
+    // LiveData if data is empty
+    private val _isEmpty = MutableLiveData<Boolean>()
+
     // LiveData of network errors.
     val networkErrors: LiveData<String>
         get() = _networkErrors
+
+    // LiveData of the empty data
+    val isEmpty : LiveData<Boolean>
+        get() = _isEmpty
 
     // avoid triggering multiple requests in the same time
     private var isRequestInProgress = false
@@ -56,12 +64,22 @@ class UserBoundaryCallback (private val query: String,
         on fail/error post the error string to livedata
          */
         searchUsers(remote, query, lastRequestedPage, NETWORK_PAGE_SIZE, { users ->
-            local.insert(users
-            ) { // lambda that executes when insertion is done, moved outside parenthesis
-                lastRequestedPage++
-                isRequestInProgress = false
+
+            // checking the total count of the list
+            if ( users?.totalCount == 0) _isEmpty.postValue(true)
+            else _isEmpty.postValue(false)
+
+            users?.items?.let {
+                local.insert(
+                    it
+                ) { // lambda that executes when insertion is done, moved outside parenthesis
+                    lastRequestedPage++
+                    isRequestInProgress = false
+                }
             }
+
         }, { error ->
+            _isEmpty.postValue(false)
             _networkErrors.postValue(error)
             isRequestInProgress = false
         })

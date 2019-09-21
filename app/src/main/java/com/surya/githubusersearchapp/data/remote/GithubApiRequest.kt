@@ -22,7 +22,7 @@ class GithubApiRequest {
             query: String,
             page: Int,
             itemsPerPage: Int,
-            onSuccess: (repos: List<GitUser>) -> Unit,
+            onSuccess: (users: GitUserResponse? ) -> Unit,
             onError: (error: String) -> Unit) {
 
 
@@ -40,9 +40,9 @@ class GithubApiRequest {
                         call: Call<GitUserResponse>?,
                         response: Response<GitUserResponse>
                     ) {
-                        Log.d(TAG, "got a response $response")
+                        Log.e(TAG, "got a response ${response.body()}")
                         if (response.isSuccessful) {
-                            val users = response.body()?.items ?: emptyList()
+                            val users = response.body()
                             onSuccess(users)
                         } else {
                             onError(response.errorBody()?.string() ?: "Unknown error")
