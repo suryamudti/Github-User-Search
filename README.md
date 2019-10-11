@@ -8,6 +8,6 @@ Technology included :
 - ViewModel (Android Jetpack)
 - LiveData (Android Jetpack)
 
-- MVVM (Architecture Patter)
+- MVVM (Architecture Pattern)
 - Retrofit (Network Request)
 
