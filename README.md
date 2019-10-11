@@ -2,10 +2,12 @@
 
 ![Screenshot](screenshoot.png)
 
-Technology included
+Technology included :
 - Paging (Android Jetpack)
 - Room Persistent Storage (Android Jetpack)
 - ViewModel (Android Jetpack)
+- LiveData (Android Jetpack)
+
 - MVVM (Architecture Patter)
-- Retrofit
+- Retrofit (Network Request)
 
