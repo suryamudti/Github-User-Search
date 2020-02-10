@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.surya.githubusersearchapp.data.callback.MainViewModelCallback
 import com.surya.githubusersearchapp.data.model.GitUser
 import com.surya.githubusersearchapp.data.model.UserSearchResult
 import com.surya.githubusersearchapp.data.repositories.GithubRepository
@@ -18,9 +17,9 @@ class MainViewModel(
 ) : ViewModel() {
 
 
-    private val queryLiveData = MutableLiveData<String>()
+    private val _queryLiveData = MutableLiveData<String>()
 
-    private val userResult: LiveData<UserSearchResult> = Transformations.map(queryLiveData) {
+    private val userResult: LiveData<UserSearchResult> = Transformations.map(_queryLiveData) {
         // returns UserSearchResult live data by executing search method from GithubRepository with every update to the queryLiveData
         repository.search(it)
     }
@@ -46,11 +45,11 @@ class MainViewModel(
      * resulting in initiating a search request from repository manager through userResult
      */
     fun searchUser(queryString: String) {
-        queryLiveData.postValue(queryString)
+        _queryLiveData.postValue(queryString)
     }
 
     /**
      * Get the last query value.
      */
-    fun lastQueryValue(): String? = queryLiveData.value
+    fun lastQueryValue(): String? = _queryLiveData.value
 }
